@@ -1,0 +1,40 @@
+syntax = "proto3";
+
+package customer;
+
+service Customer {
+    //server to client Streaming RPC
+    rpc GetCustomers(CustomerFilter) returns (stream CustomerReqeust) {}
+    
+    //Create a Customer simple RPC
+    rpc CreateCustomer(CustomerReqeust) returns (CustomerResponse) {}
+}
+
+
+/* 
+    Request Message for Create a new customer
+*/
+message CustomerReqeust {
+    int32 id = 1;
+    string name = 2;
+    string email = 3;
+    string phone = 4;
+
+    message Address {
+        string street = 1;
+        string city = 2;
+        string state = 3;
+        string zip  =4;
+        bool isShippingAddress = 5;
+    }
+    repeated Address addresses = 5;
+}
+
+message CustomerResponse {
+    int32 id = 1;
+    bool success = 2;
+}
+
+message CustomerFilter {
+    string keyword = 1;
+}
