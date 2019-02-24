@@ -2,7 +2,7 @@ package main
 
 import (
 	"context"
-	pb "gRPC/src/customer"
+	pb "gRPC/src/customer/customerProto"
 	"log"
 	"net"
 	"strings"
