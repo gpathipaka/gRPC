@@ -6,6 +6,7 @@ import (
 	pb "gRPC/src/employee/emp"
 	"log"
 	"net"
+	"strings"
 
 	"google.golang.org/grpc"
 )
@@ -63,6 +64,20 @@ func (s *server) DeleteEmployee(ctx context.Context, req *pb.SingleEmployeeReque
 		}
 	}
 	return nil, errors.New("Delete fialed...Employee does not exist")
+}
+
+func (s *server) GetAllEmployees(filter *pb.EmployeeFilter, stream pb.Employee_GetAllEmployeesServer) error {
+	for _, emp := range s.employees {
+		if filter.Keyword != "" {
+			if !strings.Contains(emp.Name, filter.Keyword) {
+				continue
+			}
+		}
+		if err := stream.Send(emp); err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 func main() {

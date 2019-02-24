@@ -16,6 +16,10 @@ service Employee{
 
     // Delete Employee Record
     rpc DeleteEmployee(SingleEmployeeRequest) returns (EmployeeResponse) {}
+
+    // Streams
+    rpc GetAllEmployees(EmployeeFilter) returns (stream EmployeeRequest) {}
+
 }
 
 message EmployeeRequest {
